@@ -1,0 +1,60 @@
+classDiagram
+    direction BT
+
+    class Notification {
+        <<interface>>
+        +send(message: String)
+    }
+
+    class SmsNotification {
+        +send(message: String)
+    }
+
+    class EmailNotification {
+        +send(message: String)
+    }
+
+    class BoardNotification {
+        +send(message: String)
+    }
+
+    class MobileAppNotification {
+        +send(message: String)
+    }
+
+    class NotificationSender {
+        <<abstract>>
+        +createNotification()* Notification
+        +notifyPassenger(message: String)
+    }
+
+    class SmsSender {
+        +createNotification() Notification
+    }
+
+    class EmailSender {
+        +createNotification() Notification
+    }
+
+    class BoardSender {
+        +createNotification() Notification
+    }
+
+    class MobileAppSender {
+        +createNotification() Notification
+    }
+
+%% Реалізація інтерфейсу продуктів
+    Notification <|.. SmsNotification : realization
+    Notification <|.. EmailNotification : realization
+    Notification <|.. BoardNotification : realization
+    Notification <|.. MobileAppNotification : realization
+
+%% Наслідування творців
+    NotificationSender <|-- SmsSender : inheritance
+    NotificationSender <|-- EmailSender : inheritance
+    NotificationSender <|-- BoardSender : inheritance
+    NotificationSender <|-- MobileAppSender : inheritance
+
+%% Залежність створення
+    NotificationSender --> Notification : creates
