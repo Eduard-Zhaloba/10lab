@@ -1,0 +1,146 @@
+classDiagram
+    direction TB
+
+    class GroundEquipmentFactory {
+        <<AbstractFactory>>
+        +getAircraftType() String
+        +createBoardingStairs() BoardingStairs
+        +createTowTractor() TowTractor
+        +createCargoLoader() CargoLoader
+    }
+    class A320EquipmentFactory {
+        <<ConcreteFactory>>
+        +getAircraftType() String
+        +createBoardingStairs() BoardingStairs
+        +createTowTractor() TowTractor
+        +createCargoLoader() CargoLoader
+    }
+    class ATR72EquipmentFactory {
+        <<ConcreteFactory>>
+        +getAircraftType() String
+        +createBoardingStairs() BoardingStairs
+        +createTowTractor() TowTractor
+        +createCargoLoader() CargoLoader
+    }
+    class WideBodyEquipmentFactory {
+        <<ConcreteFactory>>
+        +getAircraftType() String
+        +createBoardingStairs() BoardingStairs
+        +createTowTractor() TowTractor
+        +createCargoLoader() CargoLoader
+    }
+    class BoardingStairs {
+        <<interface>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class TowTractor {
+        <<interface>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class CargoLoader {
+        <<interface>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class A320BoardingStairs {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class A320TowTractor {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class A320CargoLoader {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class ATR72BoardingStairs {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class ATR72TowTractor {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class ATR72CargoLoader {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class WideBodyBoardingStairs {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class WideBodyTowTractor {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class WideBodyCargoLoader {
+        <<ConcreteProduct>>
+        +getDescription() String
+        +getAircraftType() String
+    }
+    class EquipmentKit {
+        <<ProductBundle>>
+        -String aircraftType
+        -BoardingStairs boardingStairs
+        -TowTractor towTractor
+        -CargoLoader cargoLoader
+        +EquipmentKit(String aircraftType, BoardingStairs boardingStairs, TowTractor towTractor, CargoLoader cargoLoader)
+        +getAircraftType() String
+        +getBoardingStairs() BoardingStairs
+        +getTowTractor() TowTractor
+        +getCargoLoader() CargoLoader
+        +toString() String
+    }
+    class GroundServiceDispatcher {
+        <<Client>>
+        -DateTimeFormatter TIME_FORMAT$
+        +serviceFlight(String flightNumber, GroundEquipmentFactory factory) EquipmentKit
+        -log(String message) void
+    }
+    class Task2Demo {
+        <<Demo>>
+        -DateTimeFormatter TIME_FORMAT$
+        +run() void$
+        -log(String message) void$
+        +main(String[] args) void$
+    }
+
+    GroundEquipmentFactory <|.. A320EquipmentFactory : implements
+    GroundEquipmentFactory <|.. ATR72EquipmentFactory : implements
+    GroundEquipmentFactory <|.. WideBodyEquipmentFactory : implements
+    BoardingStairs <|.. A320BoardingStairs : implements
+    A320EquipmentFactory ..> A320BoardingStairs : creates
+    TowTractor <|.. A320TowTractor : implements
+    A320EquipmentFactory ..> A320TowTractor : creates
+    CargoLoader <|.. A320CargoLoader : implements
+    A320EquipmentFactory ..> A320CargoLoader : creates
+    BoardingStairs <|.. ATR72BoardingStairs : implements
+    ATR72EquipmentFactory ..> ATR72BoardingStairs : creates
+    TowTractor <|.. ATR72TowTractor : implements
+    ATR72EquipmentFactory ..> ATR72TowTractor : creates
+    CargoLoader <|.. ATR72CargoLoader : implements
+    ATR72EquipmentFactory ..> ATR72CargoLoader : creates
+    BoardingStairs <|.. WideBodyBoardingStairs : implements
+    WideBodyEquipmentFactory ..> WideBodyBoardingStairs : creates
+    TowTractor <|.. WideBodyTowTractor : implements
+    WideBodyEquipmentFactory ..> WideBodyTowTractor : creates
+    CargoLoader <|.. WideBodyCargoLoader : implements
+    WideBodyEquipmentFactory ..> WideBodyCargoLoader : creates
+    GroundServiceDispatcher ..> GroundEquipmentFactory : uses
+    GroundServiceDispatcher ..> EquipmentKit : creates
+    Task2Demo ..> GroundServiceDispatcher : runs
+    Task2Demo ..> GroundEquipmentFactory : selects factories
+    EquipmentKit "1" --> "1" BoardingStairs : boardingStairs
+    EquipmentKit "1" --> "1" TowTractor : towTractor
+    EquipmentKit "1" --> "1" CargoLoader : cargoLoader

@@ -1,0 +1,73 @@
+classDiagram
+    direction LR
+
+    class FlightMission {
+        <<Product - immutable>>
+        -String flightNumber
+        -String route
+        -List~String~ alternateAirports
+        -String fuelCalculation
+        -String weatherReport
+        -String pilotBriefing
+        -String cargoInfo
+        -String specialInstructions
+        ~FlightMission(FlightMissionBuilder builder)
+        +getFlightNumber() String
+        +getRoute() String
+        +getAlternateAirports() List~String~
+        +getFuelCalculation() String
+        +getWeatherReport() String
+        +getPilotBriefing() String
+        +getCargoInfo() String
+        +getSpecialInstructions() String
+        +toString() String
+        -optional(String value) String$
+    }
+    class FlightMissionBuilder {
+        <<Builder>>
+        -String flightNumber
+        -String route
+        -List~String~ alternateAirports
+        -String fuelCalculation
+        -String weatherReport
+        -String pilotBriefing
+        -String cargoInfo
+        -String specialInstructions
+        +withFlightNumber(String flightNumber) FlightMissionBuilder
+        +withRoute(String route) FlightMissionBuilder
+        +withAlternateAirports(List~String~ airports) FlightMissionBuilder
+        +withFuelCalculation(String fuelCalculation) FlightMissionBuilder
+        +withWeatherReport(String weatherReport) FlightMissionBuilder
+        +withPilotBriefing(String pilotBriefing) FlightMissionBuilder
+        +withCargoInfo(String cargoInfo) FlightMissionBuilder
+        +withSpecialInstructions(String specialInstructions) FlightMissionBuilder
+        +build() FlightMission
+        -require(String value, String fieldName) void$
+        ~getFlightNumber() String
+        ~getRoute() String
+        ~getAlternateAirports() List~String~
+        ~getFuelCalculation() String
+        ~getWeatherReport() String
+        ~getPilotBriefing() String
+        ~getCargoInfo() String
+        ~getSpecialInstructions() String
+    }
+    class FlightMissionDirector {
+        <<Director>>
+        +createRegularFlight() FlightMission
+        +createTrainingFlight() FlightMission
+        -prepareRequiredParts(String flightNumber, String route, String fuelCalculation, String weatherReport) FlightMissionBuilder
+    }
+    class Task1Demo {
+        <<Client>>
+        -DateTimeFormatter TIME_FORMAT$
+        +run() void$
+        -log(String message) void$
+        +main(String[] args) void$
+    }
+
+    Task1Demo ..> FlightMissionDirector : creates / calls
+    Task1Demo ..> FlightMissionBuilder : invalid-case test
+    FlightMissionDirector ..> FlightMissionBuilder : creates / configures
+    FlightMissionBuilder ..> FlightMission : builds
+    FlightMission ..> FlightMissionBuilder : reads values in constructor
