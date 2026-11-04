@@ -25,8 +25,7 @@ public class FlightMissionDirector {
         return builder.build();
     }
 
-    private FlightMissionBuilder prepareRequiredParts(
-            String flightNumber, String route, String fuelCalculation, String weatherReport) {
+    private FlightMissionBuilder prepareRequiredParts(String flightNumber, String route, String fuelCalculation, String weatherReport) {
         return new FlightMissionBuilder()
                 .withFlightNumber(flightNumber)
                 .withRoute(route)
